@@ -1,9 +1,11 @@
 """
 Mental Health NLP Safety Demo: Suicide Risk Detection
 
-A responsible implementation of LSTM-based suicide risk detection achieving 0.94 F1 score.
-This module demonstrates both ML engineering capabilities and responsible AI development
-in sensitive mental health domains.
+A demonstration implementation of LSTM-based suicide risk detection.
+This module shows responsible AI development patterns for sensitive mental health domains.
+
+NOTE: This is a demo implementation. Model requires training with appropriate data.
+Target performance goals: >0.90 F1 score (based on literature benchmarks).
 
 IMPORTANT: This is for research and educational purposes only. Not for clinical use.
 Always direct individuals in crisis to professional mental health resources.
@@ -393,6 +395,8 @@ class SuicideRiskDetector:
 
         self.is_trained = True
         logger.info(f"Training completed. Best validation F1: {best_val_f1:.4f}")
+        print("\nNOTE: Performance metrics shown are from current training session.")
+        print("Target benchmark from literature: 0.90+ F1 score for similar architectures")
 
     def _evaluate(self, data_loader: DataLoader, criterion: nn.Module) -> Tuple[float, float, float]:
         """Evaluate model on validation/test set."""
@@ -470,6 +474,41 @@ class SuicideRiskDetector:
 
         return results
 
+    def create_demo_model(self):
+        """Create untrained demo model for illustration."""
+        self.model = SuicideRiskLSTM(
+            vocab_size=1000,  # Placeholder vocab size
+            embedding_dim=128,
+            hidden_dim=64,
+            num_layers=2,
+            dropout=0.3
+        ).to(self.device)
+        self.is_trained = False
+        self.preprocessor.vocab_size = 1000  # Set demo vocab size
+        # Initialize demo vocabulary
+        for i in range(1000):
+            self.preprocessor.word_to_idx[f"word_{i}"] = i
+        logger.info("Created demo model (untrained) for illustration purposes")
+
+    def predict_risk_demo(self, text: str) -> Tuple[int, np.ndarray]:
+        """Demo prediction without trained model."""
+        print("\n⚠️  DEMO MODE: Using keyword-based risk assessment for illustration")
+        print("Results shown are for demonstration purposes only.\n")
+
+        # Simple keyword-based demo scoring
+        risk_keywords = ['hurt', 'pain', 'end', 'worthless', 'burden', 'alone', 'hopeless', 'die', 'suicide']
+        text_lower = text.lower()
+        risk_score = sum(1 for word in risk_keywords if word in text_lower) / len(risk_keywords)
+        risk_score = min(0.95, risk_score * 2.5)  # Scale up but cap at 0.95
+
+        prediction = 1 if risk_score > 0.3 else 0
+        probs = np.array([1 - risk_score, risk_score]) if prediction == 1 else np.array([1 - risk_score, risk_score])
+
+        # Safety logging
+        EthicalWarning.log_safety_check(text, prediction, risk_score)
+
+        return prediction, probs
+
     def predict_risk(self, text: str, return_probabilities: bool = True) -> Union[int, Tuple[int, np.ndarray]]:
         """
         Predict suicide risk for a given text with safety checks.
@@ -482,7 +521,8 @@ class SuicideRiskDetector:
             Prediction (0=no risk, 1=risk) and optionally probabilities
         """
         if not self.is_trained:
-            raise ValueError("Model must be trained before making predictions")
+            # Use demo mode if model isn't trained
+            return self.predict_risk_demo(text)
 
         # Preprocess text
         sequence = self.preprocessor.text_to_sequence(text, self.max_length)
@@ -507,7 +547,13 @@ class SuicideRiskDetector:
 
     def create_risk_visualization(self, text: str) -> None:
         """Create interactive risk visualization with safety warnings."""
-        prediction, probs = self.predict_risk(text, return_probabilities=True)
+        # Get prediction - will use demo mode if not trained
+        result = self.predict_risk(text, return_probabilities=True)
+        if isinstance(result, tuple):
+            prediction, probs = result
+        else:
+            prediction = result
+            probs = np.array([0.5, 0.5])
 
         # Create visualization
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))

@@ -60,11 +60,14 @@ class MentalHealthNLPDemo:
         This demo showcases responsible AI development for mental health applications.
 
         DEMO FEATURES:
-        • LSTM model achieving 0.94 F1 score on suicide risk detection
+        • LSTM model architecture for suicide risk detection (demo mode)
         • Comprehensive safety protocols and ethical guidelines
         • Crisis intervention procedures and resource provision
         • Performance monitoring and audit capabilities
         • Responsible AI practices for sensitive domains
+
+        NOTE: This is a demonstration system showing architecture and safety patterns.
+        Actual model performance requires training with appropriate clinical data.
 
         LEARNING OBJECTIVES:
         • Understanding ethical AI development in healthcare
@@ -134,9 +137,11 @@ class MentalHealthNLPDemo:
         print("\n🏗️ MODEL ARCHITECTURE DEMONSTRATION")
         print("-" * 30)
 
-        # Create model for demonstration
-        self.detector.preprocessor.vocab_size = 10000  # Example vocab size
-        self.detector.create_model()
+        # Create demo model (untrained) for demonstration
+        self.detector.create_demo_model()
+
+        print("\n⚠️ NOTE: Using untrained demo model for architecture illustration")
+        print("Full functionality requires training with appropriate data")
 
         # Show model details
         total_params = sum(p.numel() for p in self.detector.model.parameters())
@@ -256,19 +261,15 @@ class MentalHealthNLPDemo:
                 percentage = (count / safety_metrics['total_incidents']) * 100
                 print(f"  • {level.title()}: {count} ({percentage:.1f}%)")
 
-        # Show hypothetical model performance metrics
-        print(f"\nModel Performance Metrics (from validation study):")
-        print(f"  • Overall Accuracy: 94.2%")
-        print(f"  • F1 Score: 0.94")
-        print(f"  • Precision: 92.8%")
-        print(f"  • Recall: 95.6%")
-        print(f"  • AUC-ROC: 0.97")
-
-        print(f"\nConfusion Matrix:")
-        print(f"  • True Negatives: 1,847 (89.3%)")
-        print(f"  • True Positives: 1,923 (93.1%)")
-        print(f"  • False Positives: 148 (7.2%)")
-        print(f"  • False Negatives: 98 (4.7%)")
+        # Show target model performance metrics
+        print(f"\nTarget Model Performance Metrics (literature benchmarks):")
+        print(f"  • Target Accuracy: >90%")
+        print(f"  • Target F1 Score: >0.90")
+        print(f"  • Target Precision: >85%")
+        print(f"  • Target Recall: >90%")
+        print(f"  • Target AUC-ROC: >0.95")
+        print(f"\nNote: These are target benchmarks based on published research.")
+        print(f"Actual performance depends on training data quality and volume.")
 
     def _demo_ethical_considerations(self):
         """Demonstrate ethical considerations and responsible AI practices."""
@@ -356,10 +357,9 @@ class MentalHealthNLPDemo:
 
                 print(f"\nAnalyzing: \"{user_input}\"")
 
-                # Simulate analysis (in real system, would use trained model)
-                prediction = 1 if any(word in user_input.lower()
-                                    for word in ['hurt', 'pain', 'end', 'give up']) else 0
-                confidence = np.random.uniform(0.6, 0.9) if prediction == 1 else np.random.uniform(0.7, 0.95)
+                # Use demo prediction mode
+                prediction, probs = self.detector.predict_risk_demo(user_input)
+                confidence = probs[1] if prediction == 1 else probs[0]
 
                 print(f"Prediction: {'Risk Detected' if prediction == 1 else 'No Risk'}")
                 print(f"Confidence: {confidence:.1%}")
@@ -407,11 +407,11 @@ class MentalHealthNLPDemo:
         This demonstration showcased a responsible AI system for mental health
         applications, specifically suicide risk detection using LSTM neural networks.
 
-        KEY TECHNICAL ACHIEVEMENTS:
-        • Model Performance: 94% F1 score on suicide risk detection
-        • Architecture: Bidirectional LSTM with attention mechanisms
+        KEY TECHNICAL DEMONSTRATIONS:
+        • Model Architecture: Bidirectional LSTM for text classification
         • Safety Integration: Comprehensive protocols for all risk levels
         • Ethical Framework: Multi-layered responsible AI implementation
+        • Target Performance: >90% F1 score (based on literature benchmarks)
 
         SAFETY FEATURES DEMONSTRATED:
         • Real-time risk assessment and protocol execution
