@@ -12,6 +12,59 @@ This system demonstrates responsible AI development practices for mental health 
 - Life-critical applications
 - Unsupervised content moderation
 
+---
+
+## Executive Summary
+
+This project demonstrates how to build high-performance ML systems for sensitive applications while maintaining rigorous ethical standards. It showcases the integration of technical excellence with comprehensive safety frameworks, making it a unique contribution to AI safety research.
+
+### Why This Project Matters for AI Safety
+
+**1. Safety-First Architecture**
+- Comprehensive ethical frameworks integrated from design through deployment
+- Multi-level risk assessment with human oversight protocols
+- Crisis intervention resources automatically provided with high-risk predictions
+- Extensive audit trails for accountability and oversight
+
+**2. Technical & Ethical Synthesis**
+- Achieves strong performance (MentalBERT: 97.5% accuracy, ELECTRA: 98% accuracy) without compromising safety
+- Demonstrates that responsible AI doesn't require sacrificing technical capability
+- Production-ready code patterns applicable to other sensitive domains
+
+**3. Real-World Impact**
+- Trained on 232,000 Reddit posts from r/SuicideWatch (Kaggle dataset)
+- Developed by interdisciplinary team: Scott Blain (Clinical Psychology PhD), Luis Rodriguez (ML Engineering), Violet Yang (Data Science)
+- Neuromatch Academy project showcasing psychology-informed AI safety
+
+**4. Transferable Safety Practices**
+- Ethical frameworks applicable beyond mental health applications
+- Patterns for responsible development in high-stakes AI systems
+- Integration of domain expertise (clinical psychology) with ML engineering
+
+### Key Results
+
+| Model | Accuracy | F1 Score | Precision | Recall | Dataset |
+|-------|----------|----------|-----------|--------|---------|
+| **MentalBERT** | 97.5% | 0.975 | - | - | 232K Reddit posts |
+| **ELECTRA** | 98.0% | 0.98 | - | - | 232K Reddit posts |
+| **LSTM (Baseline)** | ~90% (target) | ~0.90 (target) | ~93% (target) | ~96% (target) | Literature benchmark |
+
+*Dataset: Kaggle Suicide Watch (50/50 split suicide risk/non-risk posts)*
+
+### Project Team
+
+**Raijin Pod - Raichu's Researchers**
+- **Scott Blain** - Clinical Psychology PhD, AI Safety Research
+- **Luis Rodriguez** - ML Engineering, Model Implementation
+- **Violet Yang** - Data Science, Evaluation Framework
+
+**Neuromatch Academy Support**
+- Aeron Sim et al. - Pod TAs
+- Hedyeh Nazari - Pod TA
+- Mohammad Javad Ranjbar - Project TA
+
+---
+
 ## Project Overview
 
 This project represents a unique intersection of:
@@ -20,16 +73,20 @@ This project represents a unique intersection of:
 - **Clinical Insight**: Psychology-informed approach to AI safety
 - **Production Readiness**: Enterprise-grade code with extensive safeguards
 
-### Key Achievements
+### Performance Benchmarks
 
-| Metric | Target/Benchmark | Significance |
-|--------|-------|--------------|
-| **F1 Score** | ~0.94 (literature benchmark) | Strong performance on imbalanced data |
-| **Precision** | ~93% (target) | Minimizes false positives (reduces alarm fatigue) |
-| **Recall** | ~96% (target) | Captures most at-risk cases (safety priority) |
-| **AUC-ROC** | ~0.97 (target) | Strong discriminative ability |
+**Actual Results (MentalBERT & ELECTRA on Kaggle Dataset):**
+- MentalBERT: 97.5% accuracy, F1 = 0.975
+- ELECTRA: 98.0% accuracy, F1 = 0.98
+- Dataset: 232,000 Reddit posts (r/SuicideWatch)
 
-*Note: Actual performance depends on training data and configuration. Numbers shown reflect literature benchmarks for similar architectures.*
+**LSTM Baseline (Target Benchmarks):**
+- F1 Score: ~0.90 (target) - Strong performance on imbalanced data
+- Precision: ~93% (target) - Minimizes false positives (reduces alarm fatigue)
+- Recall: ~96% (target) - Captures most at-risk cases (safety priority)
+- AUC-ROC: ~0.97 (target) - Strong discriminative ability
+
+*Note: LSTM targets reflect literature benchmarks for similar architectures. Actual performance depends on training data and configuration.*
 
 ## Architecture
 
@@ -138,7 +195,7 @@ safety_results = guidelines.execute_safety_protocol(risk_level, text, prediction
 validation = guidelines.validate_use_case("Research study")
 ```
 
-#### 3. Safety Monitoring
+#### 4. Safety Monitoring
 Real-time monitoring and audit capabilities for responsible deployment.
 
 ```python
@@ -350,9 +407,11 @@ detector.save_model('./saved_electra_model')
 
 ## 📊 Performance Analysis
 
+*Note: The metrics shown in this section are illustrative examples demonstrating the framework's analytical capabilities. For actual results from our trained models, see the Executive Summary table showing MentalBERT (97.5% accuracy) and ELECTRA (98% accuracy) on the 232K Reddit post dataset.*
+
 ### Model Performance
 
-**Confusion Matrix:**
+**Confusion Matrix (Illustrative Example):**
 ```
                 Predicted
               No Risk  Risk
@@ -360,7 +419,7 @@ Actual No Risk  1,847   148   (92.8% precision)
        Risk       98  1,923   (95.6% recall)
 ```
 
-**Performance by Risk Level:**
+**Performance by Risk Level (Illustrative Example):**
 - **High Confidence Predictions (>90%)**: 97% accuracy
 - **Medium Confidence (70-90%)**: 94% accuracy
 - **Lower Confidence (<70%)**: 89% accuracy (flagged for review)
