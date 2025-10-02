@@ -658,9 +658,9 @@ python src/safety_guidelines.py  # Run ethics validation
 
 ## Related Projects
 
-- **[Hallucination Mitigation Framework](../llm-hallucination-reduction)**: Epistemic humility for AI truthfulness
-- **[Theory of Mind Benchmark](../theory-of-mind-benchmark)**: Social cognition evaluation
-- **[Honest AI Evaluations](../honest-ai-evaluations)**: Non-sycophantic response framework
+- **[Hallucination Mitigation Framework](https://github.com/ScottDougBlain/llm-hallucination-reduction)**: Epistemic humility for AI truthfulness
+- **[Theory of Mind Benchmark](https://github.com/ScottDougBlain/theory-of-mind-benchmark)**: Social cognition evaluation
+- **[Honest AI Evaluations](https://github.com/ScottDougBlain/honest-ai-evaluations)**: Non-sycophantic response framework
 
 ## 📋 License
 
