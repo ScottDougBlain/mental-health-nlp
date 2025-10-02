@@ -1,6 +1,6 @@
 # Mental Health NLP Safety Demo
 
-A responsible implementation of LSTM-based suicide risk detection achieving 0.94 F1 score. This project demonstrates both ML engineering capabilities and responsible AI development in sensitive mental health domains, showcasing the integration of technical excellence with comprehensive ethical frameworks.
+A responsible implementation of LSTM-based suicide risk detection with comprehensive ethical frameworks. This project demonstrates ML engineering capabilities and responsible AI development in sensitive mental health domains, showcasing the integration of technical implementation with comprehensive safety protocols.
 
 ## ⚠️ Important Notice
 
@@ -12,42 +12,64 @@ This system demonstrates responsible AI development practices for mental health 
 - Life-critical applications
 - Unsupervised content moderation
 
-## 🎯 Project Overview
+## Project Overview
 
 This project represents a unique intersection of:
-- **Technical Excellence**: High-performance LSTM achieving 94% F1 score
+- **Technical Excellence**: High-performance LSTM architecture targeting literature benchmarks
 - **Ethical Responsibility**: Comprehensive safety frameworks and crisis intervention
 - **Clinical Insight**: Psychology-informed approach to AI safety
 - **Production Readiness**: Enterprise-grade code with extensive safeguards
 
 ### Key Achievements
 
-| Metric | Value | Significance |
+| Metric | Target/Benchmark | Significance |
 |--------|-------|--------------|
-| **F1 Score** | 0.94 | Exceptional performance on imbalanced data |
-| **Precision** | 92.8% | Minimizes false positives (reduces alarm fatigue) |
-| **Recall** | 95.6% | Captures most at-risk cases (safety priority) |
-| **AUC-ROC** | 0.97 | Strong discriminative ability |
+| **F1 Score** | ~0.94 (literature benchmark) | Strong performance on imbalanced data |
+| **Precision** | ~93% (target) | Minimizes false positives (reduces alarm fatigue) |
+| **Recall** | ~96% (target) | Captures most at-risk cases (safety priority) |
+| **AUC-ROC** | ~0.97 (target) | Strong discriminative ability |
 
-## 🏗️ Architecture
+*Note: Actual performance depends on training data and configuration. Numbers shown reflect literature benchmarks for similar architectures.*
 
-### Model Architecture
+## Architecture
+
+This project includes two model implementations:
+
+### 1. LSTM Architecture (Baseline)
 ```
 Input Text → Preprocessing → Embedding → Bidirectional LSTM → Dense → Risk Probability
              (Cleaning)    (128-dim)   (64×2 hidden)     (Dropout)   (0-1 score)
 ```
 
-### Safety Architecture
+**Specifications:**
+- Embedding: 128-dimensional learned embeddings
+- LSTM: 2-layer bidirectional (64 hidden units each direction)
+- Regularization: 30% dropout, early stopping
+- Target: ~0.90 F1 score
+
+### 2. ELECTRA Architecture (State-of-the-art)
+```
+Input Text → Tokenization → ELECTRA Encoder → Classification Head → Risk Probability
+             (WordPiece)   (Transformer)    (Dense + Softmax)   (0-1 score)
+```
+
+**Specifications:**
+- Base Model: google/electra-small-discriminator (or electra-base)
+- Sequence Length: 512 tokens
+- Fine-tuning: Full model fine-tuning with AdamW optimizer
+- Target: ~0.94 F1 score (literature benchmark)
+
+### Safety Architecture (Both Models)
 ```
 Prediction → Risk Assessment → Safety Protocol → Crisis Resources → Human Oversight
            (Confidence)      (Guidelines)    (Intervention)   (Escalation)
 ```
 
-## 🧠 Technical Implementation
+## Technical Implementation
 
 ### Core Components
 
-#### 1. SuicideRiskDetector
+#### 1. SuicideRiskDetector (LSTM)
 High-performance LSTM model with comprehensive preprocessing and safety integration.
 
 ```python
@@ -66,7 +88,39 @@ prediction, confidence = detector.predict_risk(text)
 detector.create_risk_visualization(text)  # Includes crisis resources
 ```
 
-#### 2. SafetyGuidelines
+#### 2. ELECTRARiskDetector (Transformer)
+State-of-the-art transformer-based model using Google's ELECTRA.
+
+```python
+from src.electra_risk_detector import ELECTRARiskDetector
+
+# Initialize ELECTRA model
+detector = ELECTRARiskDetector(
+    model_name="google/electra-small-discriminator"
+)
+
+# Load and prepare data
+df, labels = detector.load_data('Suicide_Detection.csv')
+train_ds, val_ds, test_ds = detector.prepare_datasets(df['cleaned_text'], labels)
+
+# Train model
+detector.train(
+    train_dataset=train_ds,
+    val_dataset=val_ds,
+    num_epochs=3,
+    batch_size=16
+)
+
+# Evaluate with comprehensive metrics
+results = detector.evaluate_comprehensive(test_ds, df['cleaned_text'])
+detector.plot_confusion_matrix(results['labels'], results['predictions'])
+detector.plot_roc_and_pr_curves(results['labels'], results['probabilities'])
+
+# Make predictions
+prediction, confidence = detector.predict("Sample text")
+```
+
+#### 3. SafetyGuidelines
 Comprehensive ethical framework with risk assessment and crisis intervention.
 
 ```python
@@ -97,7 +151,7 @@ metrics = monitor.get_safety_metrics()
 
 ### Model Details
 
-**Architecture Specifications:**
+**LSTM Architecture Specifications:**
 - **Input**: Variable-length text sequences (max 100 tokens)
 - **Embedding**: 128-dimensional learned embeddings
 - **LSTM**: 2-layer bidirectional (64 hidden units each direction)
@@ -105,14 +159,22 @@ metrics = monitor.get_safety_metrics()
 - **Output**: Binary classification (suicide risk probability)
 - **Parameters**: ~847K trainable parameters
 
-**Training Configuration:**
-- **Optimizer**: Adam (lr=0.001)
-- **Loss**: Cross-entropy with class weights
-- **Batch Size**: 32
-- **Validation**: Stratified split with F1 monitoring
-- **Hardware**: GPU-accelerated training
+**ELECTRA Architecture Specifications:**
+- **Base Model**: google/electra-small-discriminator (~14M parameters)
+- **Input**: Up to 512 WordPiece tokens
+- **Encoder**: 12-layer transformer with 256 hidden dimensions
+- **Classification**: Dense layer with softmax activation
+- **Fine-tuning**: Full model with learning rate 2e-5
+- **Output**: Binary classification (suicide/non-suicide)
 
-## 🔒 Safety & Ethics Framework
+**Training Configuration:**
+- **Optimizer**: Adam (LSTM) / AdamW (ELECTRA)
+- **Loss**: Binary cross-entropy / Cross-entropy
+- **Batch Size**: 32 (LSTM) / 16 (ELECTRA)
+- **Validation**: Stratified split with F1 monitoring
+- **Hardware**: GPU-accelerated training (recommended)
+
+## Safety & Ethics Framework
 
 ### Risk Assessment Levels
 
@@ -158,12 +220,12 @@ metrics = monitor.get_safety_metrics()
 - **Professional Standards**: Clinical ethics compliance
 - **Stakeholder Input**: Mental health professional review
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/mental-health-nlp.git
+git clone https://github.com/blai90/mental-health-nlp.git
 cd mental-health-nlp
 pip install -r requirements.txt
 ```
@@ -182,6 +244,8 @@ python examples/demo_application.py --mode report
 ```
 
 ### Training Your Own Model
+
+#### Option 1: LSTM Model (Baseline)
 
 ```python
 from src.suicide_risk_detector import SuicideRiskDetector
@@ -205,6 +269,83 @@ print(f"F1 Score: {results['f1_score']:.3f}")
 
 # Save model with safety documentation
 detector._save_model('trained_model.pth')
+```
+
+#### Option 2: ELECTRA Model (State-of-the-art)
+
+**Command Line:**
+```bash
+# Download Kaggle dataset first:
+# https://www.kaggle.com/datasets/nikhileswarkomati/suicide-watch
+
+# Train ELECTRA model with default settings
+python examples/train_electra.py \
+    --data_path /path/to/Suicide_Detection.csv \
+    --save_model \
+    --save_predictions \
+    --plot
+
+# Train with custom hyperparameters
+python examples/train_electra.py \
+    --data_path /path/to/Suicide_Detection.csv \
+    --model_name google/electra-base-discriminator \
+    --num_epochs 5 \
+    --batch_size 8 \
+    --learning_rate 3e-5 \
+    --save_model \
+    --output_dir ./my_electra_results
+
+# Evaluate only (with pretrained model)
+python examples/train_electra.py \
+    --data_path /path/to/Suicide_Detection.csv \
+    --eval_only \
+    --load_model_path ./saved_model \
+    --plot
+
+# Interactive mode (make predictions on new text)
+python examples/train_electra.py \
+    --data_path /path/to/Suicide_Detection.csv \
+    --eval_only \
+    --load_model_path ./saved_model \
+    --interactive
+```
+
+**Python API:**
+```python
+from src.electra_risk_detector import ELECTRARiskDetector
+
+# Initialize ELECTRA model
+detector = ELECTRARiskDetector(
+    model_name="google/electra-small-discriminator",
+    max_length=512
+)
+
+# Load and prepare data
+df, labels = detector.load_data('Suicide_Detection.csv')
+train_ds, val_ds, test_ds = detector.prepare_datasets(
+    df['cleaned_text'],
+    labels,
+    test_size=0.2
+)
+
+# Train model
+detector.train(
+    train_dataset=train_ds,
+    val_dataset=val_ds,
+    num_epochs=3,
+    batch_size=16,
+    learning_rate=2e-5
+)
+
+# Comprehensive evaluation
+results = detector.evaluate_comprehensive(test_ds, df['cleaned_text'])
+
+# Generate visualizations
+detector.plot_confusion_matrix(results['labels'], results['predictions'])
+detector.plot_roc_and_pr_curves(results['labels'], results['probabilities'])
+
+# Save model
+detector.save_model('./saved_electra_model')
 ```
 
 ## 📊 Performance Analysis
@@ -291,7 +432,7 @@ metrics = safety_monitor.get_safety_metrics()
 bias_report = monitor.assess_demographic_fairness(predictions, demographics)
 ```
 
-## 🔬 Research Foundation
+## Research Foundation
 
 ### Clinical Psychology Integration
 
@@ -317,7 +458,7 @@ This project applies clinical insights to AI safety:
 - **Real-time Ethics Enforcement**: Automatic prohibited use detection
 - **Comprehensive Audit Trail**: Full incident logging for bias assessment
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ### Comprehensive Test Suite
 
@@ -351,7 +492,7 @@ test_prohibited_use_detection()
 run_fairness_assessment()
 ```
 
-## 📈 Use Cases & Applications
+## Use Cases & Applications
 
 ### ✅ Approved Uses
 
@@ -393,7 +534,7 @@ run_fairness_assessment()
 - Educational admissions
 - Law enforcement profiling
 
-## 🔧 Configuration & Customization
+## Configuration & Customization
 
 ### Model Configuration
 
@@ -438,7 +579,7 @@ safety_guidelines.safety_protocols[RiskLevel.HIGH] = SafetyProtocol(
 )
 ```
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions that enhance the safety and effectiveness of mental health AI:
 
@@ -458,7 +599,7 @@ We welcome contributions that enhance the safety and effectiveness of mental hea
 
 ```bash
 # Set up development environment
-git clone https://github.com/yourusername/mental-health-nlp.git
+git clone https://github.com/blai90/mental-health-nlp.git
 cd mental-health-nlp
 pip install -e ".[dev]"
 
@@ -473,7 +614,7 @@ python examples/demo_application.py --mode demo
 python src/safety_guidelines.py  # Run ethics validation
 ```
 
-## 📚 Academic Context
+## Academic Context
 
 ### Publications & Research
 
@@ -503,19 +644,19 @@ python src/safety_guidelines.py  # Run ethics validation
 - Demonstrates harm prevention through proactive design
 - Contributes to AI safety research community
 
-## 📄 Citation
+## Citation
 
 ```bibtex
 @misc{mental_health_nlp_safety_2024,
   title={Mental Health NLP Safety Demo: Responsible AI for Suicide Risk Detection},
-  author={[Your Name]},
+  author={Lai, Brandon},
   year={2024},
-  url={https://github.com/yourusername/mental-health-nlp},
+  url={https://github.com/blai90/mental-health-nlp},
   note={LSTM-based suicide risk detection with comprehensive safety framework}
 }
 ```
 
-## 🔗 Related Projects
+## Related Projects
 
 - **[Hallucination Mitigation Framework](../llm-hallucination-reduction)**: Epistemic humility for AI truthfulness
 - **[Theory of Mind Benchmark](../theory-of-mind-benchmark)**: Social cognition evaluation
@@ -533,12 +674,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🎯 Project Impact
+## Project Impact
 
 This project demonstrates that technical excellence and ethical responsibility are not just compatible, but mutually reinforcing. By implementing comprehensive safety frameworks alongside high-performance ML models, we show how responsible AI development can achieve both technical and social objectives.
 
 **Key Takeaways:**
-- **0.94 F1 Score** proves technical competence in challenging ML domain
+- **High-Performance Architecture** targeting literature benchmarks proves technical competence in challenging ML domain
 - **Comprehensive Safety Framework** demonstrates ethical AI development skills
 - **Crisis Intervention Integration** shows understanding of real-world impact
 - **Production-Ready Code** indicates software engineering capabilities
