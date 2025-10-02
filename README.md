@@ -4,9 +4,15 @@ A responsible implementation of LSTM-based suicide risk detection with comprehen
 
 ## ⚠️ Important Notice
 
-**This is for research and educational purposes only. NOT for clinical use.**
+**This is a demonstration framework for research and educational purposes only. NOT for clinical use.**
 
-This system demonstrates responsible AI development practices for mental health applications but should never be used for:
+**Implementation Status:**
+- ✅ **Complete code implementation** for LSTM and ELECTRA models
+- ✅ **Comprehensive safety framework** with real crisis resources
+- ⚠️ **Models are NOT pre-trained** - require training on actual data
+- ⚠️ **No performance validation** - metrics shown are targets based on literature
+
+This system demonstrates responsible AI development practices but should never be used for:
 - Clinical diagnosis or treatment decisions
 - Automated intervention systems
 - Life-critical applications
@@ -27,12 +33,12 @@ This project demonstrates how to build high-performance ML systems for sensitive
 - Extensive audit trails for accountability and oversight
 
 **2. Technical & Ethical Synthesis**
-- Achieves strong performance (MentalBERT: 97.5% accuracy, ELECTRA: 98% accuracy) without compromising safety
-- Demonstrates that responsible AI doesn't require sacrificing technical capability
+- Demonstrates architecture capable of strong performance while maintaining safety protocols
+- Shows that responsible AI doesn't require sacrificing technical capability
 - Production-ready code patterns applicable to other sensitive domains
 
-**3. Real-World Impact**
-- Trained on 232,000 Reddit posts from r/SuicideWatch (Kaggle dataset)
+**3. Real-World Applicability**
+- Designed for Kaggle Suicide Watch dataset (232,000 Reddit posts)
 - Developed by interdisciplinary team: Scott Blain (Clinical Psychology PhD), Luis Rodriguez (ML Engineering), Violet Yang (Data Science)
 - Neuromatch Academy project showcasing psychology-informed AI safety
 
@@ -41,15 +47,14 @@ This project demonstrates how to build high-performance ML systems for sensitive
 - Patterns for responsible development in high-stakes AI systems
 - Integration of domain expertise (clinical psychology) with ML engineering
 
-### Key Results
+### Architecture Capabilities
 
-| Model | Accuracy | F1 Score | Precision | Recall | Dataset |
-|-------|----------|----------|-----------|--------|---------|
-| **MentalBERT** | 97.5% | 0.975 | - | - | 232K Reddit posts |
-| **ELECTRA** | 98.0% | 0.98 | - | - | 232K Reddit posts |
-| **LSTM (Baseline)** | ~90% (target) | ~0.90 (target) | ~93% (target) | ~96% (target) | Literature benchmark |
+| Model | Architecture | Status | Target Performance |
+|-------|-------------|--------|-------------------|
+| **ELECTRA** | Google's electra-small/base transformer | Implemented, requires training | ~94% F1 (literature benchmark) |
+| **LSTM Baseline** | Bidirectional LSTM with attention | Implemented, requires training | ~90% F1 (literature benchmark) |
 
-*Dataset: Kaggle Suicide Watch (50/50 split suicide risk/non-risk posts)*
+*Note: This repository provides the complete implementation and training pipeline. Actual performance depends on training with appropriate data. The Kaggle Suicide Watch dataset (232K Reddit posts) is recommended for training.*
 
 ### Project Team
 
@@ -73,20 +78,24 @@ This project represents a unique intersection of:
 - **Clinical Insight**: Psychology-informed approach to AI safety
 - **Production Readiness**: Enterprise-grade code with extensive safeguards
 
-### Performance Benchmarks
+### Implementation Status
 
-**Actual Results (MentalBERT & ELECTRA on Kaggle Dataset):**
-- MentalBERT: 97.5% accuracy, F1 = 0.975
-- ELECTRA: 98.0% accuracy, F1 = 0.98
-- Dataset: 232,000 Reddit posts (r/SuicideWatch)
+**What's Implemented:**
+- ✅ Complete LSTM architecture with bidirectional layers and attention
+- ✅ Full ELECTRA transformer pipeline using HuggingFace
+- ✅ Comprehensive safety framework with crisis resources
+- ✅ Dataset loader for Kaggle Suicide Watch data
+- ✅ Training, evaluation, and visualization pipelines
 
-**LSTM Baseline (Target Benchmarks):**
-- F1 Score: ~0.90 (target) - Strong performance on imbalanced data
-- Precision: ~93% (target) - Minimizes false positives (reduces alarm fatigue)
-- Recall: ~96% (target) - Captures most at-risk cases (safety priority)
-- AUC-ROC: ~0.97 (target) - Strong discriminative ability
+**What's Required:**
+- ⚠️ Training on actual dataset (code ready, models untrained)
+- ⚠️ Hyperparameter tuning for optimal performance
+- ⚠️ Validation on test set to measure actual performance
 
-*Note: LSTM targets reflect literature benchmarks for similar architectures. Actual performance depends on training data and configuration.*
+**Expected Performance (based on literature):**
+- ELECTRA: ~94% F1 score typical for similar transformer models
+- LSTM: ~90% F1 score typical for bidirectional LSTM on this task
+- *Note: Actual performance requires training and evaluation*
 
 ## Architecture
 
@@ -407,7 +416,7 @@ detector.save_model('./saved_electra_model')
 
 ## 📊 Performance Analysis
 
-*Note: The metrics shown in this section are illustrative examples demonstrating the framework's analytical capabilities. For actual results from our trained models, see the Executive Summary table showing MentalBERT (97.5% accuracy) and ELECTRA (98% accuracy) on the 232K Reddit post dataset.*
+*Note: All metrics shown in this section are illustrative examples demonstrating the framework's analytical capabilities. The repository provides complete implementation but models require training on actual data to achieve real performance metrics.*
 
 ### Model Performance
 
@@ -732,6 +741,30 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - Regular bias assessment and fairness evaluation required
 
 ---
+
+## Current Limitations
+
+### What This Repository Is
+
+- **Complete implementation** of LSTM and ELECTRA architectures for mental health risk detection
+- **Comprehensive safety framework** with real crisis resources and ethical guidelines
+- **Training pipeline** ready to work with Kaggle Suicide Watch dataset
+- **Demonstration of best practices** for responsible AI in sensitive domains
+- **Educational resource** for learning about safety-first ML development
+
+### What This Repository Is NOT
+
+- **NOT a trained model** - requires actual training on data
+- **NOT validated** - no performance metrics have been measured
+- **NOT for clinical use** - purely educational/research demonstration
+- **NOT claiming achieved performance** - all metrics are literature-based targets
+
+### To Use This Repository
+
+1. **Download the Kaggle dataset**: [Suicide Watch dataset](https://www.kaggle.com/datasets/nikhileswarkomati/suicide-watch)
+2. **Train the models**: Use provided training scripts with actual data
+3. **Validate performance**: Measure actual metrics on test set
+4. **Never use clinically**: This is for research/education only
 
 ## Project Impact
 
