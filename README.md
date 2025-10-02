@@ -225,7 +225,7 @@ metrics = monitor.get_safety_metrics()
 ### Installation
 
 ```bash
-git clone https://github.com/blai90/mental-health-nlp.git
+git clone https://github.com/ScottDougBlain/mental-health-nlp.git
 cd mental-health-nlp
 pip install -r requirements.txt
 ```
@@ -599,7 +599,7 @@ We welcome contributions that enhance the safety and effectiveness of mental hea
 
 ```bash
 # Set up development environment
-git clone https://github.com/blai90/mental-health-nlp.git
+git clone https://github.com/ScottDougBlain/mental-health-nlp.git
 cd mental-health-nlp
 pip install -e ".[dev]"
 
@@ -649,9 +649,9 @@ python src/safety_guidelines.py  # Run ethics validation
 ```bibtex
 @misc{mental_health_nlp_safety_2024,
   title={Mental Health NLP Safety Demo: Responsible AI for Suicide Risk Detection},
-  author={Lai, Brandon},
+  author={Blain, Scott},
   year={2024},
-  url={https://github.com/blai90/mental-health-nlp},
+  url={https://github.com/ScottDougBlain/mental-health-nlp},
   note={LSTM-based suicide risk detection with comprehensive safety framework}
 }
 ```
