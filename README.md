@@ -39,7 +39,7 @@ This project demonstrates how to build high-performance ML systems for sensitive
 
 **3. Real-World Applicability**
 - Designed for Kaggle Suicide Watch dataset (232,000 Reddit posts)
-- Developed by interdisciplinary team: Scott Blain (Clinical Psychology PhD), Luis Rodriguez (ML Engineering), Violet Yang (Data Science)
+- Developed by interdisciplinary team: Scott Blain (Psychology PhD), Luis Rodriguez (ML Engineering), Violet Yang (Data Science)
 - Neuromatch Academy project showcasing psychology-informed AI safety
 
 **4. Transferable Safety Practices**
@@ -59,7 +59,7 @@ This project demonstrates how to build high-performance ML systems for sensitive
 ### Project Team
 
 **Raijin Pod - Raichu's Researchers**
-- **Scott Blain** - Clinical Psychology PhD, AI Safety Research
+- **Scott Blain** - Psychology PhD, AI Safety Research
 - **Luis Rodriguez** - ML Engineering, Model Implementation
 - **Violet Yang** - Data Science, Evaluation Framework
 
